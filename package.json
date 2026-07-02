@@ -1,0 +1,19 @@
+{
+  "name": "dieline-fold-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader runner",
+    "build": "vite build --configLoader runner",
+    "preview": "vite preview --configLoader runner"
+  },
+  "dependencies": {
+    "lucide": "^0.468.0",
+    "pdfjs-dist": "^4.10.38",
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5"
+  }
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090d" />
+    <meta name="description" content="Turn a flat carton dieline into an interactive folding 3D box." />
+    <title>FoldLab - Dieline to 3D</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="FoldLab home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>FOLD<span>LAB</span></span>
+        </a>
+        <div class="topbar-meta"><span class="live-dot"></span><span>REAL-TIME GEOMETRY</span><strong>THREE.JS</strong></div>
+      </header>
+
+      <section class="workspace" aria-label="Dieline folding workspace">
+        <aside class="control-panel glass-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">INPUT / 01</p>
+            <h1>Dieline source</h1>
+            <p>Upload a color-coded carton layout. Cut contours and crease lines are detected in-browser.</p>
+          </div>
+
+          <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Upload a dieline file">
+            <input id="file-input" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/*,application/pdf" hidden />
+            <div class="upload-icon"><i data-lucide="scan-line"></i></div>
+            <strong>Drop dieline here</strong>
+            <span>PNG, JPG, SVG or PDF</span>
+            <button class="secondary-button" id="browse-button" type="button"><i data-lucide="upload"></i>Browse file</button>
+          </div>
+
+          <button class="sample-button" id="sample-button" type="button"><i data-lucide="box"></i><span><strong>Load sample carton</strong><small>Straight tuck-end dieline</small></span><i data-lucide="arrow-right"></i></button>
+
+          <section class="analysis-block" aria-labelledby="analysis-title">
+            <div class="section-label"><span id="analysis-title">ANALYSIS</span><span id="analysis-state">READY</span></div>
+            <div class="preview-wrap">
+              <canvas id="dieline-preview" width="640" height="400" aria-label="Dieline analysis preview"></canvas>
+              <div class="preview-empty" id="preview-empty"><i data-lucide="layers-3"></i><span>Awaiting source</span></div>
+            </div>
+            <div class="metrics">
+              <div><span>Panels</span><strong id="panel-count">--</strong></div>
+              <div><span>Cut paths</span><strong id="cut-count">--</strong></div>
+              <div><span>Creases</span><strong id="crease-count">--</strong></div>
+            </div>
+            <div class="legend"><span><i class="cut"></i>Cut</span><span><i class="crease"></i>Crease</span><span><i class="score"></i>Score</span></div>
+          </section>
+        </aside>
+
+        <section class="viewer-panel glass-panel">
+          <div class="viewer-head">
+            <div><p class="eyebrow">ASSEMBLY / 02</p><h2>3D fold viewer</h2></div>
+            <div class="viewer-actions">
+              <button class="icon-button" id="reset-camera" type="button" aria-label="Reset camera" title="Reset camera"><i data-lucide="focus"></i></button>
+              <button class="icon-button" id="toggle-grid" type="button" aria-label="Toggle grid" title="Toggle grid"><i data-lucide="grid-3x3"></i></button>
+            </div>
+          </div>
+          <div class="canvas-wrap" id="canvas-wrap">
+            <div id="three-canvas" aria-label="Interactive 3D box viewer"></div>
+            <div class="axis-widget" aria-hidden="true"><span class="axis-y">Y</span><span class="axis-x">X</span><span class="axis-z">Z</span><i></i></div>
+            <div class="viewer-hint"><i data-lucide="mouse-pointer-2"></i>Drag to orbit <span></span> Scroll to zoom</div>
+            <div class="empty-stage" id="empty-stage"><div class="stage-glyph"><i data-lucide="unfold-horizontal"></i></div><strong>No geometry yet</strong><span>Load a dieline to build the panel hierarchy</span></div>
+            <div class="build-overlay" id="build-overlay" aria-live="polite">
+              <div class="loader-ring"></div><strong id="build-label">Reading contours</strong><span id="build-detail">Classifying line colors...</span>
+            </div>
+          </div>
+
+          <div class="timeline-panel">
+            <div class="timeline-head"><span>FOLD PROGRESS</span><output id="fold-output">0%</output></div>
+            <div class="transport">
+              <button class="play-button" id="play-button" type="button" aria-label="Play fold animation"><i data-lucide="play"></i></button>
+              <input id="fold-slider" type="range" min="0" max="100" value="0" aria-label="Fold progress" />
+            </div>
+            <div class="timeline-labels"><span>FLAT DIELINE</span><span>90 DEG HINGES</span><span>CLOSED BOX</span></div>
+          </div>
+        </section>
+      </section>
+
+      <footer class="statusbar">
+        <div><span class="status-light"></span><strong id="status-text">SYSTEM READY</strong><span id="file-name">No source loaded</span></div>
+        <div><span>RENDERER</span><strong>WEBGL 2</strong><span>UNITS</span><strong>MM</strong></div>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
